@@ -1,0 +1,32 @@
+{
+    "name": "digitalcloud/nova-page-builder-field",
+    "description": "A Laravel Nova page builder field.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "field",
+        "page builder",
+        "page design"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DigitalCloud\\NovaPageBuilderField\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DigitalCloud\\NovaPageBuilderField\\FieldServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
