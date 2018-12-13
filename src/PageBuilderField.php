@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalCloud\NovaPageBuilderField;
+namespace DigitalCloud\PageBuilderField;
 
 use Laravel\Nova\Fields\Field;
 

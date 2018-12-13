@@ -14,13 +14,13 @@
     },
     "autoload": {
         "psr-4": {
-            "DigitalCloud\\NovaPageBuilderField\\": "src/"
+            "DigitalCloud\\PageBuilderField\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "DigitalCloud\\NovaPageBuilderField\\FieldServiceProvider"
+                "DigitalCloud\\PageBuilderField\\FieldServiceProvider"
             ]
         }
     },
