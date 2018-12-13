@@ -54379,8 +54379,8 @@ module.exports = __webpack_require__(21);
 /***/ (function(module, exports, __webpack_require__) {
 
 Nova.booting(function (Vue, router) {
-    Vue.component('detail-grapes-field', __webpack_require__(6));
-    Vue.component('form-grapes-field', __webpack_require__(9));
+    Vue.component('detail-page-builder-field', __webpack_require__(6));
+    Vue.component('form-page-builder-field', __webpack_require__(9));
 });
 
 /***/ }),
