@@ -13,13 +13,13 @@ composer require digitalcloud/nova-page-builder-field
 You can publish the required assets with:
 
 ```shell
-php artisan vendor:publish --provider="DigitalCloud\NovaPageBuilderField\FieldServiceProvider" --tag=public
+php artisan vendor:publish --provider="DigitalCloud\PageBuilderField\FieldServiceProvider" --tag=public
 ```
 
 ## Usage
 
 ```php
-use DigitalCloud\NovaPageBuilderField\PageBuilderField;
+use use DigitalCloud\PageBuilderField\PageBuilderField;
 // ....
 
 PageBuilderField::make('page'),
