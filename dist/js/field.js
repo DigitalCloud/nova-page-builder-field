@@ -55073,209 +55073,226 @@ process.umask = function() { return 0; };
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_grapesjs___default.a.plugins.add('custom', function (editor, opts) {
 
-    var opt = opts || {};
-    var config = editor.getConfig();
-    var pfx = editor.getConfig().stylePrefix;
-    var modal = editor.Modal;
-    var $ = window.$ || __WEBPACK_IMPORTED_MODULE_0_grapesjs___default.a.$;
+  var opt = opts || {};
+  var config = editor.getConfig();
+  var pfx = editor.getConfig().stylePrefix;
+  var modal = editor.Modal;
+  var $ = window.$ || __WEBPACK_IMPORTED_MODULE_0_grapesjs___default.a.$;
 
-    config.showDevices = 0;
+  config.showDevices = 0;
 
-    var updateTooltip = function updateTooltip(coll, pos) {
-        coll.each(function (item) {
-            var attrs = item.get('attributes');
-            attrs['data-tooltip-pos'] = pos || 'bottom';
-            item.set('attributes', attrs);
-        });
-    };
-
-    /****************** IMPORTER *************************/
-
-    var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
-    var container = document.createElement('div');
-    var btnImp = document.createElement('button');
-
-    // Init import button
-    btnImp.innerHTML = 'Import';
-    btnImp.className = pfx + 'btn-prim ' + pfx + 'btn-import';
-    btnImp.onclick = function () {
-        var code = codeViewer.editor.getValue();
-        editor.DomComponents.getWrapper().set('content', '');
-        editor.setComponents(code.trim());
-        modal.close();
-    };
-
-    // Init code viewer
-    codeViewer.set({
-        codeName: 'htmlmixed',
-        theme: opt.codeViewerTheme || 'hopscotch',
-        readOnly: 0
+  var updateTooltip = function updateTooltip(coll, pos) {
+    coll.each(function (item) {
+      var attrs = item.get('attributes');
+      attrs['data-tooltip-pos'] = pos || 'bottom';
+      item.set('attributes', attrs);
     });
+  };
 
-    /****************** COMMANDS *************************/
+  /****************** IMPORTER *************************/
 
-    var cmdm = editor.Commands;
-    cmdm.add('undo', {
-        run: function run(editor, sender) {
-            sender.set('active', 0);
-            editor.UndoManager.undo(1);
-        }
-    });
-    cmdm.add('redo', {
-        run: function run(editor, sender) {
-            sender.set('active', 0);
-            editor.UndoManager.redo(1);
-        }
-    });
-    cmdm.add('set-device-desktop', {
-        run: function run(editor) {
-            editor.setDevice('Desktop');
-        }
-    });
-    cmdm.add('set-device-tablet', {
-        run: function run(editor) {
-            editor.setDevice('Tablet');
-        }
-    });
-    cmdm.add('set-device-mobile', {
-        run: function run(editor) {
-            editor.setDevice('Mobile portrait');
-        }
-    });
-    cmdm.add('clean-all', {
-        run: function run(editor, sender) {
-            sender && sender.set('active', false);
-            if (confirm('Are you sure to clean the canvas?')) {
-                var comps = editor.DomComponents.clear();
-                setTimeout(function () {
-                    localStorage.clear();
-                }, 0);
-            }
-        }
-    });
+  var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+  var container = document.createElement('div');
+  var btnImp = document.createElement('button');
 
-    cmdm.add('html-import', {
-        run: function run(editor, sender) {
-            sender && sender.set('active', 0);
+  // Init import button
+  btnImp.innerHTML = 'Import';
+  btnImp.className = pfx + 'btn-prim ' + pfx + 'btn-import';
+  btnImp.onclick = function () {
+    var code = codeViewer.editor.getValue();
+    editor.DomComponents.getWrapper().set('content', '');
+    editor.setComponents(code.trim());
+    modal.close();
+  };
 
-            var modalContent = modal.getContentEl();
-            var viewer = codeViewer.editor;
-            modal.setTitle('Import Template');
+  // Init code viewer
+  codeViewer.set({
+    codeName: 'htmlmixed',
+    theme: opt.codeViewerTheme || 'hopscotch',
+    readOnly: 0
+  });
 
-            // Init code viewer if not yet instantiated
-            if (!viewer) {
-                var txtarea = document.createElement('textarea');
-                var labelEl = document.createElement('div');
-                labelEl.className = pfx + 'import-label';
-                labelEl.innerHTML = 'Paste here your HTML/CSS and click Import';
-                container.appendChild(labelEl);
-                container.appendChild(txtarea);
-                container.appendChild(btnImp);
-                codeViewer.init(txtarea);
-                viewer = codeViewer.editor;
-            }
+  /****************** COMMANDS *************************/
 
-            modal.setContent('');
-            modal.setContent(container);
-            codeViewer.setContent('<div class="txt-red">Hello world!</div>' + '<style>\n.txt-red {color: red;padding: 30px\n}</style>');
-            modal.open();
-            viewer.refresh();
-        }
-    });
+  var cmdm = editor.Commands;
+  cmdm.add('undo', {
+    run: function run(editor, sender) {
+      sender.set('active', 0);
+      editor.UndoManager.undo(1);
+    }
+  });
+  cmdm.add('redo', {
+    run: function run(editor, sender) {
+      sender.set('active', 0);
+      editor.UndoManager.redo(1);
+    }
+  });
+  cmdm.add('set-device-desktop', {
+    run: function run(editor) {
+      editor.setDevice('Desktop');
+    }
+  });
+  cmdm.add('set-device-tablet', {
+    run: function run(editor) {
+      editor.setDevice('Tablet');
+    }
+  });
+  cmdm.add('set-device-mobile', {
+    run: function run(editor) {
+      editor.setDevice('Mobile portrait');
+    }
+  });
+  cmdm.add('clean-all', {
+    run: function run(editor, sender) {
+      sender && sender.set('active', false);
+      if (confirm('Are you sure to clean the canvas?')) {
+        var comps = editor.DomComponents.clear();
+        setTimeout(function () {
+          localStorage.clear();
+        }, 0);
+      }
+    }
+  });
 
-    /****************** BLOCKS *************************/
+  cmdm.add('html-import', {
+    run: function run(editor, sender) {
+      sender && sender.set('active', 0);
 
-    var bm = editor.BlockManager;
+      var modalContent = modal.getContentEl();
+      var viewer = codeViewer.editor;
+      modal.setTitle('Import Template');
 
-    bm.add('quote', {
-        label: 'Quote',
-        category: 'Basic',
-        content: '<blockquote class="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</blockquote>',
-        attributes: { class: 'fa fa-quote-right' }
-    });
+      // Init code viewer if not yet instantiated
+      if (!viewer) {
+        var txtarea = document.createElement('textarea');
+        var labelEl = document.createElement('div');
+        labelEl.className = pfx + 'import-label';
+        labelEl.innerHTML = 'Paste here your HTML/CSS and click Import';
+        container.appendChild(labelEl);
+        container.appendChild(txtarea);
+        container.appendChild(btnImp);
+        codeViewer.init(txtarea);
+        viewer = codeViewer.editor;
+      }
 
-    bm.add('section-hero', {
-        label: 'Hero section',
-        category: 'Sections',
-        content: '<header class="header-banner"> <div class="container-width">' + '<div class="logo-container"><div class="logo">GrapesJS</div></div>' + '<nav class="navbar">' + '<div class="menu-item">BUILDER</div><div class="menu-item">TEMPLATE</div><div class="menu-item">WEB</div>' + '</nav><div class="clearfix"></div>' + '<div class="lead-title">Build your templates without coding</div>' + '<div class="lead-btn">Try it now</div></div></header>',
-        attributes: { class: 'gjs-fonts gjs-f-hero' }
-    });
+      modal.setContent('');
+      modal.setContent(container);
+      codeViewer.setContent('<div class="txt-red">Hello world!</div>' + '<style>\n.txt-red {color: red;padding: 30px\n}</style>');
+      modal.open();
+      viewer.refresh();
+    }
+  });
 
-    bm.add('section-typography', {
-        label: 'Text section',
-        category: 'Sections',
-        content: '<section class="bdg-sect">\n      <h1 class="heading">Insert title here</h1>\n      <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>\n      </section>',
-        attributes: { class: 'gjs-fonts gjs-f-h1p' }
-    });
+  /****************** BLOCKS *************************/
 
-    bm.add('section-badges', {
-        label: 'Badges',
-        category: 'Sections',
-        content: '<section class="bdg-sect"><div class="badges">' + '<div class="badge">' + '<div class="badge-header"></div>' + '<img class="badge-avatar" src="img/team1.jpg">' + '<div class="badge-body">' + '<div class="badge-name">Adam Smith</div><div class="badge-role">CEO</div><div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</div>' + '</div>' + '<div class="badge-foot"><span class="badge-link">f</span><span class="badge-link">t</span><span class="badge-link">ln</span></div>' + '</div>' + '<div class="badge">' + '<div class="badge-header"></div>' + '<img class="badge-avatar" src="img/team2.jpg">' + '<div class="badge-body">' + '<div class="badge-name">John Black</div><div class="badge-role">Software Engineer</div><div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</div>' + '</div>' + '<div class="badge-foot"><span class="badge-link">f</span><span class="badge-link">t</span><span class="badge-link">ln</span></div>' + '</div>' + '<div class="badge">' + '<div class="badge-header"></div>' + '<img class="badge-avatar" src="img/team3.jpg">' + '<div class="badge-body">' + '<div class="badge-name">Jessica White</div><div class="badge-role">Web Designer</div><div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</div>' + '</div>' + '<div class="badge-foot"><span class="badge-link">f</span><span class="badge-link">t</span><span class="badge-link">ln</span>' + '</div>' + '</div></div></section>',
-        attributes: { class: 'gjs-fonts gjs-f-3ba' }
-    });
+  var bm = editor.BlockManager;
 
-    /****************** BUTTONS *************************/
+  bm.add('quote', {
+    label: 'Quote',
+    category: 'Basic',
+    content: '<blockquote class="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</blockquote>',
+    attributes: { class: 'fa fa-quote-right' }
+  });
 
-    var pnm = editor.Panels;
-    pnm.addButton('options', [{
-        id: 'undo',
-        className: 'fa fa-undo icon-undo',
-        command: 'undo',
-        attributes: { title: 'Undo (CTRL/CMD + Z)' }
-    }, {
-        id: 'redo',
-        className: 'fa fa-repeat icon-redo',
-        command: 'redo',
-        attributes: { title: 'Redo (CTRL/CMD + SHIFT + Z)' }
-    }, {
-        id: 'import',
-        className: 'fa fa-download',
-        command: 'html-import',
-        attributes: { title: 'Import' }
-    }, {
-        id: 'clean-all',
-        className: 'fa fa-trash icon-blank',
-        command: 'clean-all',
-        attributes: { title: 'Empty canvas' }
-    }]);
+  bm.add('section-hero', {
+    label: 'Hero section',
+    category: 'Sections',
+    content: '<style>\n.clearfix{\n  clear:both;\n}\n.header-banner{\n  padding-top:35px;\n  padding-bottom:100px;\n  color:#ffffff;\n  font-family:Helvetica, serif;\n  font-weight:100;\n  background-image:url("//grapesjs.com/img/bg-gr-v.png"), url("//grapesjs.com/img/work-desk.jpg");\n  background-attachment:scroll, scroll;\n  background-position:left top, center center;\n  background-repeat:repeat-y, no-repeat;\n  background-size:contain, cover;\n}\n.container-width{\n  width:90%;\n  max-width:1150px;\n  margin:0 auto;\n}\n.logo-container{\n  float:left;\n  width:50%;\n}\n.logo{\n  background-color:#fff;\n  border-radius:5px;\n  width:130px;\n  padding:10px;\n  min-height:30px;\n  text-align:center;\n  line-height:30px;\n  color:#4d114f;\n  font-size:23px;\n}\n        .menu{\n  float:right;\n  width:50%;\n}\n.menu-item{\n  float:right;\n  font-size:15px;\n  color:#eee;\n  width:130px;\n  padding:10px;\n  min-height:50px;\n  text-align:center;\n  line-height:30px;\n  font-weight:400;\n}\n.lead-title{\n  margin:150px 0 30px 0;\n  font-size:40px;\n}\n.sub-lead-title{\n  max-width:650px;\n  line-height:30px;\n  margin-bottom:30px;\n  color:#c6c6c6;\n}\n.lead-btn{\n  margin-top:15px;\n  padding:10px;\n  width:190px;\n  min-height:30px;\n  font-size:20px;\n  text-align:center;\n  letter-spacing:3px;\n  line-height:30px;\n  background-color:#d983a6;\n  border-radius:5px;\n  transition:all 0.5s ease;\n  cursor:pointer;\n}\n.lead-btn:hover{\n  background-color:#ffffff;\n  color:#4c114e;\n}\n.lead-btn:active{\n  background-color:#4d114f;\n  color:#fff;\n}\n        </style>' + '<header class="header-banner"> <div class="container-width">' + '<div class="logo-container"><div class="logo">GrapesJS</div></div>' + '<nav class="navbar">' + '<div class="menu-item">BUILDER</div><div class="menu-item">TEMPLATE</div><div class="menu-item">WEB</div>' + '</nav><div class="clearfix"></div>' + '<div class="lead-title">Build your templates without coding</div>' + '<div class="lead-btn">Try it now</div></div></header>',
+    attributes: { class: 'gjs-fonts gjs-f-hero' }
+  });
 
-    // Add devices buttons
-    var panelDevices = pnm.addPanel({ id: 'devices-c' });
-    var deviceBtns = panelDevices.get('buttons');
-    deviceBtns.add([{
-        id: 'deviceDesktop',
-        command: 'set-device-desktop',
-        className: 'fa fa-desktop',
-        attributes: { 'title': 'Desktop' },
-        active: 1
-    }, {
-        id: 'deviceTablet',
-        command: 'set-device-tablet',
-        className: 'fa fa-tablet',
-        attributes: { 'title': 'Tablet' }
-    }, {
-        id: 'deviceMobile',
-        command: 'set-device-mobile',
-        className: 'fa fa-mobile',
-        attributes: { 'title': 'Mobile' }
-    }]);
-    updateTooltip(deviceBtns);
-    updateTooltip(pnm.getPanel('options').get('buttons'));
+  bm.add('section-badges', {
+    label: 'Badges',
+    category: 'Sections',
+    content: '<style>.bdg-sect{\n  padding-top:100px;\n  padding-bottom:100px;\n  font-family:Helvetica, serif;\n  background-color:#fafafa;\n}\n.bdg-title{\n  text-align:center;\n  font-size:2em;\n  margin-bottom:55px;\n  color:#555555;\n}\n.badges{\n  padding:20px;\n  display:flex;\n  justify-content:space-around;\n  align-items:flex-start;\n  flex-wrap:wrap;\n}\n.badge{\n  width:290px;\n  font-family:Helvetica, serif;\n  background-color:white;\n  margin-bottom:30px;\n  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.2);\n  border-radius:3px;\n  font-weight:100;\n  overflow:hidden;\n  text-align:center;\n}\n.badge-header{\n  height:115px;\n  background-image:url("//grapesjs.com/img/bg-gr-v.png"), url("//grapesjs.com/img/work-desk.jpg");\n  background-position:left top, center center;\n  background-attachment:scroll, fixed;\n  overflow:hidden;\n}\n.badge-name{\n  font-size:1.4em;\n  margin-bottom:5px;\n}\n.badge-role{\n  color:#777;\n  font-size:1em;\n  margin-bottom:25px;\n}\n.badge-desc{\n  font-size:0.85rem;\n  line-height:20px;\n}\n.badge-avatar{\n  width:100px;\n  height:100px;\n  border-radius:100%;\n  border:5px solid #fff;\n  box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.2);\n  margin-top:-75px;\n  position:relative;\n}\n.badge-body{\n  margin:35px 10px;\n}\n.badge-foot{\n  color:#fff;\n  background-color:#a290a5;\n  padding-top:13px;\n  padding-bottom:13px;\n  display:flex;\n  justify-content:center;\n}\n.badge-link{\n  height:35px;\n  width:35px;\n  line-height:35px;\n  font-weight:700;\n  background-color:#fff;\n  color:#a290a5;\n  display:block;\n  border-radius:100%;\n  margin:0 10px;\n}</style><section class="bdg-sect">\n  <div class="container-width">\n    <h1 class="bdg-title">The team</h1>\n    <div class="badges">\n      <div class="badge">\n        <div class="badge-header">\n        </div>\n        <img src="img/team1.jpg" class="badge-avatar"/>\n        <div class="badge-body">\n          <div class="badge-name">Adam Smith\n          </div>\n          <div class="badge-role">CEO\n          </div>\n          <div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit\n          </div>\n        </div>\n        <div class="badge-foot">\n          <span class="badge-link">f</span>\n          <span class="badge-link">t</span>\n          <span class="badge-link">ln</span>\n        </div>\n      </div>\n      <div class="badge">\n        <div class="badge-header">\n        </div>\n        <img src="img/team2.jpg" class="badge-avatar"/>\n        <div class="badge-body">\n          <div class="badge-name">John Black\n          </div>\n          <div class="badge-role">Software Engineer\n          </div>\n          <div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit\n          </div>\n        </div>\n        <div class="badge-foot">\n          <span class="badge-link">f</span>\n          <span class="badge-link">t</span>\n          <span class="badge-link">ln</span>\n        </div>\n      </div>\n      <div class="badge">\n        <div class="badge-header">\n        </div>\n        <img src="img/team3.jpg" class="badge-avatar"/>\n        <div class="badge-body">\n          <div class="badge-name">Jessica White\n          </div>\n          <div class="badge-role">Web Designer\n          </div>\n          <div class="badge-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit\n          </div>\n        </div>\n        <div class="badge-foot">\n          <span class="badge-link">f</span>\n          <span class="badge-link">t</span>\n          <span class="badge-link">ln</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>\n',
+    attributes: { class: 'gjs-fonts gjs-f-h1p' }
+  });
+  //
+  // bm.add('section-typography', {
+  //     label: 'Text section',
+  //     category: 'Sections',
+  //     content: `<section class="bdg-sect">
+  //   <h1 class="heading">Insert title here</h1>
+  //   <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+  //   </section>`,
+  //     attributes: {class: 'gjs-fonts gjs-f-h1p'}
+  // });
+  //
+  bm.add('section-cards', {
+    label: 'Cards',
+    category: 'Sections',
+    content: '<style>\n        .cards{\n  padding:20px 0;\n  display:flex;\n  justify-content:space-around;\n  flex-flow:wrap;\n}\n.card{\n  background-color:white;\n  height:300px;\n  width:300px;\n  margin-bottom:30px;\n  box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2);\n  border-radius:2px;\n  transition:all 0.5s ease;\n  font-weight:100;\n  overflow:hidden;\n}\n.card:hover{\n  margin-top:-5px;\n  box-shadow:0 20px 30px 0 rgba(0, 0, 0, 0.2);\n}\n.card-header{\n  height:155px;\n  background-image:url("//placehold.it/350x250/78c5d6/fff/image1.jpg");\n  background-size:cover;\n  background-position:center center;\n}\n.card-header.ch2{\n  background-image:url("//placehold.it/350x250/459ba8/fff/image2.jpg");\n}\n.card-header.ch3{\n  background-image:url("//placehold.it/350x250/79c267/fff/image3.jpg");\n}\n.card-header.ch4{\n  background-image:url("//placehold.it/350x250/c5d647/fff/image4.jpg");\n}\n.card-header.ch5{\n  background-image:url("//placehold.it/350x250/f28c33/fff/image5.jpg");\n}\n.card-header.ch6{\n  background-image:url("//placehold.it/350x250/e868a2/fff/image6.jpg");\n}\n.card-body{\n  padding:15px 15px 5px 15px;\n  color:#555;\n}\n.card-title{\n  font-size:1.4em;\n  margin-bottom:5px;\n}\n.card-sub-title{\n  color:#b3b3b3;\n  font-size:1em;\n  margin-bottom:15px;\n}\n.card-desc{\n  font-size:0.85rem;\n  line-height:17px;\n}\n\n</style><div class="cards">\n        <div class="card">\n        <div class="card-header">\n        </div>\n        <div class="card-body">\n          <div class="card-title">Title one\n          </div>\n          <div class="card-sub-title">Subtitle one\n          </div>\n          <div class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore\n          </div>\n        </div>\n      </div>\n      <div class="card">\n        <div class="card-header">\n        </div>\n        <div class="card-body">\n          <div class="card-title">Title two\n          </div>\n          <div class="card-sub-title">Subtitle one\n          </div>\n          <div class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore\n          </div>\n        </div>\n      </div>\n      </div>',
+    attributes: { class: 'gjs-fonts gjs-f-3ba' }
+  });
 
-    /****************** EVENTS *************************/
+  bm.add('section-card', {
+    label: 'Card',
+    category: 'Sections',
+    content: '<style>\n        .cards{\n  padding:20px 0;\n  display:flex;\n  justify-content:space-around;\n  flex-flow:wrap;\n}\n.card{\n  background-color:white;\n  height:300px;\n  width:300px;\n  margin-bottom:30px;\n  box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2);\n  border-radius:2px;\n  transition:all 0.5s ease;\n  font-weight:100;\n  overflow:hidden;\n}\n.card:hover{\n  margin-top:-5px;\n  box-shadow:0 20px 30px 0 rgba(0, 0, 0, 0.2);\n}\n.card-header{\n  height:155px;\n  background-image:url("//placehold.it/350x250/78c5d6/fff/image1.jpg");\n  background-size:cover;\n  background-position:center center;\n}\n.card-header.ch2{\n  background-image:url("//placehold.it/350x250/459ba8/fff/image2.jpg");\n}\n.card-header.ch3{\n  background-image:url("//placehold.it/350x250/79c267/fff/image3.jpg");\n}\n.card-header.ch4{\n  background-image:url("//placehold.it/350x250/c5d647/fff/image4.jpg");\n}\n.card-header.ch5{\n  background-image:url("//placehold.it/350x250/f28c33/fff/image5.jpg");\n}\n.card-header.ch6{\n  background-image:url("//placehold.it/350x250/e868a2/fff/image6.jpg");\n}\n.card-body{\n  padding:15px 15px 5px 15px;\n  color:#555;\n}\n.card-title{\n  font-size:1.4em;\n  margin-bottom:5px;\n}\n.card-sub-title{\n  color:#b3b3b3;\n  font-size:1em;\n  margin-bottom:15px;\n}\n.card-desc{\n  font-size:0.85rem;\n  line-height:17px;\n}\n\n</style>\n        <div class="card" data-gjs-draggable=".cards">\n        <div class="card-header"></div>\n        <div class="card-body">\n          <div class="card-title">Title one\n          </div>\n          <div class="card-sub-title">Subtitle one\n          </div>\n          <div class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore\n          </div>\n        </div>\n      </div>\n      \n      ',
+    attributes: { class: 'gjs-fonts gjs-f-3ba' }
+  });
 
-    // On component change show the Style Manager
-    editor.on('change:selectedComponent', function () {
-        var openLayersBtn = editor.Panels.getButton('views', 'open-layers');
+  /****************** BUTTONS *************************/
 
-        // Don't switch when the Layer Manager is on or
-        // there is no selected component
-        if ((!openLayersBtn || !openLayersBtn.get('active')) && editor.editor.get('selectedComponent')) {
-            var openSmBtn = editor.Panels.getButton('views', 'open-sm');
-            openSmBtn && openSmBtn.set('active', 1);
-        }
-    });
+  var pnm = editor.Panels;
+  pnm.addButton('options', [{
+    id: 'undo',
+    className: 'fa fa-undo icon-undo',
+    command: 'undo',
+    attributes: { title: 'Undo (CTRL/CMD + Z)' }
+  }, {
+    id: 'redo',
+    className: 'fa fa-repeat icon-redo',
+    command: 'redo',
+    attributes: { title: 'Redo (CTRL/CMD + SHIFT + Z)' }
+  }, {
+    id: 'import',
+    className: 'fa fa-download',
+    command: 'html-import',
+    attributes: { title: 'Import' }
+  }, {
+    id: 'clean-all',
+    className: 'fa fa-trash icon-blank',
+    command: 'clean-all',
+    attributes: { title: 'Empty canvas' }
+  }]);
+
+  // Add devices buttons
+  var panelDevices = pnm.addPanel({ id: 'devices-c' });
+  var deviceBtns = panelDevices.get('buttons');
+  deviceBtns.add([{
+    id: 'deviceDesktop',
+    command: 'set-device-desktop',
+    className: 'fa fa-desktop',
+    attributes: { 'title': 'Desktop' },
+    active: 1
+  }, {
+    id: 'deviceTablet',
+    command: 'set-device-tablet',
+    className: 'fa fa-tablet',
+    attributes: { 'title': 'Tablet' }
+  }, {
+    id: 'deviceMobile',
+    command: 'set-device-mobile',
+    className: 'fa fa-mobile',
+    attributes: { 'title': 'Mobile' }
+  }]);
+  updateTooltip(deviceBtns);
+  updateTooltip(pnm.getPanel('options').get('buttons'));
+
+  /****************** EVENTS *************************/
+
+  // On component change show the Style Manager
+  editor.on('change:selectedComponent', function () {
+    var openLayersBtn = editor.Panels.getButton('views', 'open-layers');
+
+    // Don't switch when the Layer Manager is on or
+    // there is no selected component
+    if ((!openLayersBtn || !openLayersBtn.get('active')) && editor.editor.get('selectedComponent')) {
+      var openSmBtn = editor.Panels.getButton('views', 'open-sm');
+      openSmBtn && openSmBtn.set('active', 1);
+    }
+  });
 }));
 
 /***/ }),
