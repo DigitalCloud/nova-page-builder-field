@@ -20,8 +20,18 @@ class PageBuilderField extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
         $this->hideFromIndex();
+    }
 
-        $this->withMeta(['asHtml' => true, 'shouldShow' => $this->shouldBeExpanded()]);
+    /**
+     * Prepare the element for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'shouldShow' => $this->shouldBeExpanded(),
+        ]);
     }
 
 }
