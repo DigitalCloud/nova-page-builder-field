@@ -23,6 +23,10 @@ class FieldServiceProvider extends ServiceProvider
             Nova::script('page-builder-field', __DIR__.'/../dist/js/field.js');
             Nova::style('page-builder-field', __DIR__.'/../dist/css/field.css');
         });
+
+        $this->publishes([
+            __DIR__ . '/../config/translatable-grapesjs.php' => config_path('nova/translatable-grapesjs.php'),
+        ], 'config');
     }
 
     /**
