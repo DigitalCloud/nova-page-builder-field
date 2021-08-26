@@ -31,7 +31,7 @@ class FieldServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/css/components.css' => public_path('/vendor/nova/t-grapesjs/css/components.css'),
         ], 'styles');
-
+    }
     /**
      * Register any application services.
      *
@@ -41,4 +41,5 @@ class FieldServiceProvider extends ServiceProvider
     {
         //
     }
+
 }
