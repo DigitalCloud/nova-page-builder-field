@@ -11,7 +11,7 @@ class PageBuilderField extends Field
      *
      * @var string
      */
-    public $component = 'page-builder-field';
+    public $component = 'translatable-builder';
 
 
     public function __construct($name, $attribute = null, $resolveCallback = null)

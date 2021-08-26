@@ -17,8 +17,8 @@ class FieldServiceProvider extends ServiceProvider
     {
 		
         Nova::serving(function (ServingNova $event) {
-            Nova::script('page-builder-field', __DIR__.'/../dist/js/field.js');
-            Nova::style('page-builder-field', __DIR__.'/../dist/css/field.css');
+            Nova::script('translatable-builder', __DIR__.'/../dist/js/field.js');
+            Nova::style('translatable-builder', __DIR__.'/../dist/css/field.css');
         });
 
         $this->publishes([
