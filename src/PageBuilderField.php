@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalCloud\TranslatableBuilder;
+namespace DigitalCloud\PageBuilderField;
 
 use Laravel\Nova\Fields\Field;
 
-class TranslatableBuilder extends Field
+class PageBuilderField extends Field
 {
     /**
      * The field's component.

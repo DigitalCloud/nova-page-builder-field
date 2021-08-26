@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalCloud\TranslatableBuilder;
+namespace DigitalCloud\PageBuilderField;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
