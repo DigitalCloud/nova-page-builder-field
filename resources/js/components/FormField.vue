@@ -60,9 +60,6 @@ export default {
                 currentLocale: null
         }
     },
-  mounted() {
-            this.currentLocale = this.locales[0] || null;
-        },
     methods: {
         
         /*
@@ -79,7 +76,7 @@ export default {
           Object.keys(this.value).forEach(locale => {
             let newValue = '<style>' + this.editor.getCss() + '</style><div>' + this.editor.getHtml() + '</div>';
             formData.append(this.field.attribute + '['+locale+']', newValue || '')
-                            )}
+                            })
         },
 
         /**
