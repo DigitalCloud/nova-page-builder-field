@@ -15,16 +15,23 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		$this->publishes([
-			__DIR__.'/../resources/fonts' => public_path('/fonts'),
-		], 'public');
-	
+		
         Nova::serving(function (ServingNova $event) {
             Nova::script('page-builder-field', __DIR__.'/../dist/js/field.js');
             Nova::style('page-builder-field', __DIR__.'/../dist/css/field.css');
         });
-    }
 
+        $this->publishes([
+            __DIR__ . '/../resources/fonts' => public_path('/fonts'),
+        ], 'public');
+
+        $this->publishes([
+            __DIR__ . '/../config/translatable-grapesjs.php' => config_path('nova/translatable-grapesjs.php'),
+        ], 'config');
+        $this->publishes([
+            __DIR__ . '/../resources/css/components.css' => public_path('/vendor/nova/t-grapesjs/css/components.css'),
+        ], 'styles');
+    }
     /**
      * Register any application services.
      *
@@ -34,4 +41,5 @@ class FieldServiceProvider extends ServiceProvider
     {
         //
     }
+
 }
